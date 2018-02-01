@@ -16,7 +16,8 @@ export default class SearchBox extends React.Component {
           checked={this.props.inStock}
           onChange={this.props.onIsStockChange}
           name="isStock"
-        />
+        />{" "}
+        Only show products in stock
       </div>
     );
   }
