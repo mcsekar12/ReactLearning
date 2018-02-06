@@ -32,7 +32,9 @@ ul {
   text-align: center;
   width: 34px;
 }
-
+.square.highlight {
+  background: lightcoral;
+}
 .square:focus {
   outline: none;
 }
@@ -48,4 +50,11 @@ ul {
 
 .game-info {
   margin-left: 20px;
+}
+.bold {
+  color: red;
+}
+.bold button {
+  color: red;
+  font-weight: 600;
 }

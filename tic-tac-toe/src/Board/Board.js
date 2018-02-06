@@ -2,33 +2,31 @@ import React from "react";
 import Square from "../Square/Square";
 
 export default class Board extends React.Component {
-  renderSquare(i) {
+  renderSquare(row, col) {
     return (
       <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.handleClick(i)}
+        value={this.props.squares[row * 3 + col]}
+        onClick={() => this.props.handleClick(row * 3 + col)}
+        row={row}
+        col={col}
+        key={row + "" + col}
+        won={this.props.winnerSquare.indexOf(row * 3 + col) !== -1}
       />
     );
   }
   render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+    let boardSquares = [];
+    for (let i = 0; i < 3; i++) {
+      let columns = [];
+      for (let j = 0; j < 3; j++) {
+        columns.push(this.renderSquare(i, j));
+      }
+      boardSquares.push(
+        <div className="board-row" key={i}>
+          {columns}
         </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
+      );
+    }
+    return <div>{boardSquares}</div>;
   }
 }
