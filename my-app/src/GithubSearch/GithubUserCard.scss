@@ -1,0 +1,28 @@
+.github__user__card {
+  width: 400px;
+  background: lavender;
+  padding: 10px;
+  margin: 30px auto;
+  display: flex;
+  height: 100%;
+  font-size: 14px;
+  .user__pic {
+    img {
+      width: 50px;
+      height: 50px;
+      margin: 10px;
+    }
+  }
+  .repo__info {
+    margin: 10px;
+    .user__fullname {
+      padding-bottom: 10px;
+      span {
+        margin-left: 20px;
+      }
+    }
+    .follow__count {
+      margin-left: 20px;
+    }
+  }
+}

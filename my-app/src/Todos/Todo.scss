@@ -1,0 +1,33 @@
+.todo__cont {
+  width: 500px;
+  margin: 0 auto;
+  background: linen;
+  padding: 20px;
+  margin-top: 10px;
+
+  ul.todo__list {
+    margin: 10 auto;
+    padding: 20px 0;
+    list-style-type: none;
+
+    li {
+      cursor: pointer;
+
+      &.completed {
+        text-decoration: line-through;
+      }
+    }
+  }
+  .filter {
+    &__cont {
+      margin-top: 10px;
+    }
+    padding: 10px;
+    font-size: 12px;
+    margin-right: 5px;
+    cursor: pointer;
+    &__active {
+      background: lightcyan;
+    }
+  }
+}

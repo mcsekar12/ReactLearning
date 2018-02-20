@@ -1,47 +1,57 @@
 .App {
-  text-align: center; }
-
+  text-align: center;
+}
 .App-header {
   background-color: #222;
   height: 30px;
   padding: 20px;
-  color: white; }
+  color: white;
+}
 
 .App-title {
   font-size: 1.5em;
-  margin: 0; }
+  margin: 0;
+}
 
 .App-intro {
-  font-size: large; }
+  font-size: large;
+}
 
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg); }
+    transform: rotate(0deg);
+  }
   to {
-    transform: rotate(360deg); } }
+    transform: rotate(360deg);
+  }
+}
 
 nav {
   text-decoration: none;
   list-style-type: none;
   display: flex;
   background: lightcyan;
-  padding: 10px; }
-  nav ul {
+  padding: 10px;
+  ul {
     list-style-type: none;
     display: flex;
     padding: 0;
     margin: 0;
-    align-items: center; }
-    nav ul li {
-      margin-right: 10px; }
-      nav ul li a {
+    align-items: center;
+    li {
+      margin-right: 10px;
+      a {
         text-decoration: none;
         background: lightcoral;
         color: white;
         padding: 10px;
-        font-size: 12px; }
-
+        font-size: 12px;
+      }
+    }
+  }
+}
 .primary__nav.active {
   background: white;
   color: lightcoral;
-  border: 1px dashed lightcoral; }
+  border: 1px dashed lightcoral;
+}

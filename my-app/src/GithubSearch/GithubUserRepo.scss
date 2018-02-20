@@ -1,0 +1,30 @@
+.repo__list {
+  width: 400px;
+  margin: 0 auto;
+  list-style-type: none;
+  background: lavender;
+  padding: 10px;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid lightyellow;
+    .repo__info {
+      display: flex;
+      .fork__info {
+        margin-left: 10px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+.title {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  background: lightslategray;
+  color: white;
+  font-size: 14px;
+}

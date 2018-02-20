@@ -1,0 +1,23 @@
+.todo__cont {
+  width: 500px;
+  margin: 0 auto;
+  background: linen;
+  padding: 20px;
+  margin-top: 10px; }
+  .todo__cont ul.todo__list {
+    margin: 10 auto;
+    padding: 20px 0;
+    list-style-type: none; }
+    .todo__cont ul.todo__list li {
+      cursor: pointer; }
+      .todo__cont ul.todo__list li.completed {
+        text-decoration: line-through; }
+  .todo__cont .filter {
+    padding: 10px;
+    font-size: 12px;
+    margin-right: 5px;
+    cursor: pointer; }
+    .todo__cont .filter__cont {
+      margin-top: 10px; }
+    .todo__cont .filter__active {
+      background: lightcyan; }

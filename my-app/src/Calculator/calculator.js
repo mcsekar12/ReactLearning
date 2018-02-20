@@ -1,8 +1,26 @@
 import React from "react";
 import BoilingVerdict from "./BoilingVerdict";
 import TemperatureInput from "./TemperatureInput";
-
+import Counter from "../Counter/Counter";
+import CounterRedux from "../Counter/CounterRedux";
+import CounterCustomRedux from "../Counter/CounterCustomRedux";
 import "./calculator.css";
+
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+let counter = (state = { value: 0 }, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return { value: state.value + 1 };
+    case "DECREMENT":
+      return { value: state.value - 1 };
+    default:
+      return state;
+  }
+};
+const store = createStore(counter);
+
 function toCelsius(fahrenheit) {
   return (fahrenheit - 32) * 5 / 9;
 }
@@ -64,6 +82,18 @@ class Calculator extends React.Component {
           onTemperatureChange={this.handleFahrenheitChange}
         />
         <BoilingVerdict celsius={parseFloat(temperature)} />
+
+        <Counter />
+
+        <CounterCustomRedux />
+
+        <Provider store={store}>
+          <CounterRedux />
+        </Provider>
+
+        <Provider store={store}>
+          <CounterRedux />
+        </Provider>
       </div>
     );
   }
