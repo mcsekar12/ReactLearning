@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Todo from "./Todo";
 
 import { createStore } from "redux";
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
+
 // import { combineReducers } from "redux";
 
 const todo = (state, action) => {
@@ -15,7 +16,7 @@ const todo = (state, action) => {
       };
     }
     case "TOGGLE_ITEM": {
-      if (state.id !== action.itemIndex) {
+      if (state.id !== action.id) {
         return state;
       }
       return { ...state, completed: !state.completed };

@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
   getGithubUserRepo(userName) {
-    let clientId = "";
-    let client_secret = "";
+    let clientId = "c65c250a625a635287e4";
+    let client_secret = "e3f52d207ce460df391ae2b4bc77e74fe89a1f1c";
     return axios.get(
       "https://api.github.com/users/" +
         userName +
