@@ -16,8 +16,12 @@
     padding: 10px;
     font-size: 12px;
     margin-right: 5px;
-    cursor: pointer; }
+    cursor: pointer;
+    border: none; }
     .todo__cont .filter__cont {
       margin-top: 10px; }
     .todo__cont .filter__active {
-      background: lightcyan; }
+      background: lightcyan;
+      font-weight: bold; }
+    .todo__cont .filter:focus {
+      outline: none; }

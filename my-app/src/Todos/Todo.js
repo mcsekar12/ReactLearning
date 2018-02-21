@@ -1,6 +1,7 @@
-import React from "react";
-// import { connect } from "react-redux";
+import React, { Component } from "react";
 import "./Todo.css";
+import PropTypes from "prop-types";
+
 var classNames = require("classnames");
 
 function getFilteredTodo(list = [], visibilityFilter) {
@@ -12,10 +13,35 @@ function getFilteredTodo(list = [], visibilityFilter) {
   });
 }
 
-// function mapStateToProps(state) {
-//   return { list: state.todos, visibilityFilter: state.visibilityFilter };
-// }
-// export default connect(mapStateToProps)(Todo);
+class VisibleTodo extends Component {
+  componentDidMount() {
+    let { store } = this.context;
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate();
+    });
+  }
+  componentWillUnMount() {
+    this.unsubscribe();
+  }
+
+  render() {
+    let { store } = this.context;
+    let state = store.getState();
+    const list = getFilteredTodo(state.todos, state.visibilityFilter);
+    return (
+      <TodoList
+        list={list}
+        toggleCompleted={id => {
+          store.dispatch({ type: "TOGGLE_ITEM", id: id });
+        }}
+      />
+    );
+  }
+}
+
+VisibleTodo.contextTypes = {
+  store: PropTypes.object
+};
 
 const TodoItem = ({ onClick, completed, text }) => {
   return (
@@ -46,8 +72,9 @@ const TodoList = props => {
   return <ul className="todo__list">{todoList}</ul>;
 };
 
-const AddToDo = props => {
+const AddToDo = (props, { store }) => {
   let input;
+
   return (
     <div>
       <input
@@ -57,13 +84,17 @@ const AddToDo = props => {
         type="text"
         onKeyPress={e => {
           if (e.key === "Enter") {
-            props.addToDo(input.value);
+            store.dispatch({ type: "ADD_ITEM", text: input.value });
             input.value = "";
           }
         }}
       />
     </div>
   );
+};
+
+AddToDo.contextTypes = {
+  store: PropTypes.object
 };
 
 const Footer = props => {
@@ -73,66 +104,72 @@ const Footer = props => {
     { label: "Active", value: "ACTIVE" }
   ];
   let filters = filterList.map(filter => {
-    let filterClass = classNames({
-      filter: true,
-      filter__active: props.activeFilter === filter.value
-    });
     return (
-      <span key={filter.value} className={filterClass}>
-        <FilterLink
-          value={filter.value}
-          changeFilter={() => {
-            props.changeFilter(filter.value);
-          }}
-        >
-          {filter.label}
-        </FilterLink>
-      </span>
+      <FilterLink key={filter.value} value={filter.value}>
+        {filter.label}
+      </FilterLink>
     );
   });
   return <div className="filter__cont">{filters}</div>;
 };
 
-const FilterLink = ({ value, children, ...props }) => {
+const Todo = () => {
   return (
-    <a
-      href="#"
+    <div className="todo__cont">
+      <div>Todo </div>
+      <AddToDo />
+      <VisibleTodo />
+      <Footer />
+    </div>
+  );
+};
+
+const Link = ({ value, children, active, ...props }) => {
+  return (
+    <button
+      className={classNames({
+        filter: true,
+        filter__active: active
+      })}
       onClick={e => {
         e.preventDefault();
         props.changeFilter(value);
       }}
     >
       {children}
-    </a>
+    </button>
   );
 };
+class FilterLink extends Component {
+  componentDidMount() {
+    let { store } = this.context;
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate();
+    });
+  }
+  componentWillUnMount() {
+    this.unsubscribe();
+  }
+  render() {
+    let { store } = this.context;
+    let state = store.getState();
 
-const Todo = ({ list, visibilityFilter, ...props }) => {
-  return (
-    <div className="todo__cont">
-      <div>Todo </div>
-      <AddToDo
-        addToDo={inputValue => {
-          props.dispatch({ type: "ADD_ITEM", text: inputValue });
-        }}
-      />
-      <TodoList
-        list={getFilteredTodo(list, visibilityFilter)}
-        toggleCompleted={id => {
-          props.dispatch({ type: "TOGGLE_ITEM", id: id });
-        }}
-      />
-      <Footer
-        activeFilter={visibilityFilter}
+    return (
+      <Link
+        active={state.visibilityFilter === this.props.value}
+        value={this.props.value}
         changeFilter={filter => {
-          props.dispatch({
-            type: "SET_VISIBILITY_STATE",
-            filter: filter
-          });
+          store.dispatch({ type: "SET_VISIBILITY_STATE", filter: filter });
         }}
-      />
-    </div>
-  );
+      >
+        {this.props.children}
+      </Link>
+    );
+  }
+}
+
+FilterLink.contextTypes = {
+  store: PropTypes.object
 };
 
 export default Todo;

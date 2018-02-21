@@ -22,12 +22,18 @@
     &__cont {
       margin-top: 10px;
     }
+
     padding: 10px;
     font-size: 12px;
     margin-right: 5px;
     cursor: pointer;
+    border: none;
     &__active {
       background: lightcyan;
+      font-weight: bold;
+    }
+    &:focus {
+      outline: none;
     }
   }
 }
