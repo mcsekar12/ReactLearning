@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Todo.css";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 var classNames = require("classnames");
 
@@ -12,36 +13,6 @@ function getFilteredTodo(list = [], visibilityFilter) {
     else return !item.completed;
   });
 }
-
-class VisibleTodo extends Component {
-  componentDidMount() {
-    let { store } = this.context;
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-  componentWillUnMount() {
-    this.unsubscribe();
-  }
-
-  render() {
-    let { store } = this.context;
-    let state = store.getState();
-    const list = getFilteredTodo(state.todos, state.visibilityFilter);
-    return (
-      <TodoList
-        list={list}
-        toggleCompleted={id => {
-          store.dispatch({ type: "TOGGLE_ITEM", id: id });
-        }}
-      />
-    );
-  }
-}
-
-VisibleTodo.contextTypes = {
-  store: PropTypes.object
-};
 
 const TodoItem = ({ onClick, completed, text }) => {
   return (
@@ -71,6 +42,21 @@ const TodoList = props => {
   }
   return <ul className="todo__list">{todoList}</ul>;
 };
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleCompleted: id => {
+      dispatch({ type: "TOGGLE_ITEM", id: id });
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    list: getFilteredTodo(state.todos, state.visibilityFilter)
+  };
+};
+const VisibleTodo = connect(mapStateToProps, mapDispatchToProps)(TodoList);
 
 const AddToDo = (props, { store }) => {
   let input;
