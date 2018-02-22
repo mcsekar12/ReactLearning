@@ -58,7 +58,7 @@ const mapStateToProps = state => {
 };
 const VisibleTodo = connect(mapStateToProps, mapDispatchToProps)(TodoList);
 
-const AddToDo = (props, { store }) => {
+let AddToDo = ({ dispatch }) => {
   let input;
 
   return (
@@ -70,7 +70,7 @@ const AddToDo = (props, { store }) => {
         type="text"
         onKeyPress={e => {
           if (e.key === "Enter") {
-            store.dispatch({ type: "ADD_ITEM", text: input.value });
+            dispatch({ type: "ADD_ITEM", text: input.value });
             input.value = "";
           }
         }}
@@ -79,9 +79,7 @@ const AddToDo = (props, { store }) => {
   );
 };
 
-AddToDo.contextTypes = {
-  store: PropTypes.object
-};
+AddToDo = connect()(AddToDo);
 
 const Footer = props => {
   let filterList = [
