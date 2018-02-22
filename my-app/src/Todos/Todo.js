@@ -4,6 +4,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 var classNames = require("classnames");
+const addTodoItem = value => {
+  return { type: "ADD_ITEM", text: value };
+};
+const setVisibilityFilter = filter => {
+  return { type: "SET_VISIBILITY_STATE", filter: filter };
+};
+const toggleTodo = id => {
+  return { type: "TOGGLE_ITEM", id: id };
+};
 
 function getFilteredTodo(list = [], visibilityFilter) {
   return list.filter(item => {
@@ -46,7 +55,7 @@ const TodoList = props => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleCompleted: id => {
-      dispatch({ type: "TOGGLE_ITEM", id: id });
+      dispatch(toggleTodo(id));
     }
   };
 };
@@ -70,7 +79,7 @@ let AddToDo = ({ dispatch }) => {
         type="text"
         onKeyPress={e => {
           if (e.key === "Enter") {
-            dispatch({ type: "ADD_ITEM", text: input.value });
+            dispatch(addTodoItem(input.value));
             input.value = "";
           }
         }}
@@ -134,7 +143,7 @@ const mapStateToLinkProps = (state, ownProps) => {
 const mapDispatchToLinkProps = dispatch => {
   return {
     changeFilter: filter => {
-      dispatch({ type: "SET_VISIBILITY_STATE", filter: filter });
+      dispatch(setVisibilityFilter(filter));
     }
   };
 };
