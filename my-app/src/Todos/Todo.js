@@ -124,36 +124,20 @@ const Link = ({ value, children, active, ...props }) => {
     </button>
   );
 };
-class FilterLink extends Component {
-  componentDidMount() {
-    let { store } = this.context;
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-  componentWillUnMount() {
-    this.unsubscribe();
-  }
-  render() {
-    let { store } = this.context;
-    let state = store.getState();
 
-    return (
-      <Link
-        active={state.visibilityFilter === this.props.value}
-        value={this.props.value}
-        changeFilter={filter => {
-          store.dispatch({ type: "SET_VISIBILITY_STATE", filter: filter });
-        }}
-      >
-        {this.props.children}
-      </Link>
-    );
-  }
-}
-
-FilterLink.contextTypes = {
-  store: PropTypes.object
+const mapStateToLinkProps = (state, ownProps) => {
+  return {
+    active: state.visibilityFilter === ownProps.value,
+    value: ownProps.value
+  };
 };
+const mapDispatchToLinkProps = dispatch => {
+  return {
+    changeFilter: filter => {
+      dispatch({ type: "SET_VISIBILITY_STATE", filter: filter });
+    }
+  };
+};
+const FilterLink = connect(mapStateToLinkProps, mapDispatchToLinkProps)(Link);
 
 export default Todo;
